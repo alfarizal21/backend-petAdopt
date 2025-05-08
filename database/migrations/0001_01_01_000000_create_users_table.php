@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('password');
             $table->enum('role', ['user', 'admin', 'shelter'])->default('user');
             $table->string('no_telp')->nullable();
-            $table->text('alamat')->nullable();
+            $table->date('tgl_lahir')->nullable();
+            $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan'])->nullable();
             $table->timestamps();
         });
 

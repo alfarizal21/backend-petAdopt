@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Hewan;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,7 +12,10 @@ class HewanController extends Controller
     public function index()
     {
         $hewan = Hewan::with('user')->get();
-        return response()->json($hewan);
+        return response()->json([
+            'message' => 'Get successfully',
+            'data' => $hewan
+        ]);
     }
 
     public function show($id)
@@ -22,7 +26,10 @@ class HewanController extends Controller
             return response()->json(['message' => 'Not found'], 404);
         }
 
-        return response()->json($hewan);
+        return response()->json([
+            'message' => 'Get successfully',
+            'data' => $hewan
+        ]);
     }
 
     public function store(Request $request)
@@ -87,5 +94,23 @@ class HewanController extends Controller
         $hewan->delete();
 
         return response()->json(['message' => 'Deleted successfully']);
+    }
+
+    public function filterByJenis(Request $request, $jenis)
+    {
+        $jenis = strtolower($jenis);
+
+        if (!in_array($jenis, ['kucing', 'anjing'])) {
+            return response()->json([
+                'message' => 'Invalid animal type. Please use "kucing" or "anjing".'
+            ], 400);
+        }
+
+        $hewan = Hewan::with('user')->where('jenis', $jenis)->get();
+
+        return response()->json([
+            'message' => 'Get successfully',
+            'data' => $hewan
+        ]);
     }
 }

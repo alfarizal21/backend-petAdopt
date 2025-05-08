@@ -9,7 +9,10 @@ class ArtikelController extends Controller
 {
     public function index()
     {
-        return response()->json(Artikel::all());
+        return response()->json([
+            'message' => 'Get successfully',
+            'data' => Artikel::all()
+        ]);
     }
 
     public function show($id)
@@ -20,7 +23,10 @@ class ArtikelController extends Controller
             return response()->json(['message' => 'Not found'], 404);
         }
 
-        return response()->json($artikel);
+        return response()->json([
+            'message' => 'Get successfully',
+            'data' => $artikel
+        ]);
     }
 
     public function store(Request $request)

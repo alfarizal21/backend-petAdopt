@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Like;
 
 class User extends Authenticatable
 {
@@ -17,13 +18,13 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'id_user',
         'name',
         'email',
         'password',
         'role',
         'no_telp',
-        'alamat',
+        'jenis_kelamin',
+        'tgl_lahir',
     ];
 
     /**
@@ -45,33 +46,30 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',  // Untuk Laravel 10+, memastikan password aman.
         'role' => 'string',       // Pastikan role di-cast sebagai string
+        'tgl_lahir' => 'date',  // Pastikan tanggal lahir di-cast sebagai date
     ];
 
-    /**
-     * Relasi antara User dan Hewan
-     * Satu user (shelter) bisa memiliki banyak hewan yang tersedia untuk diadopsi
-     */
+    //user bisa memiliki banyak hewan
     public function hewan()
     {
-        return $this->hasMany(Hewan::class, 'id_user');
+        return $this->hasMany(Hewan::class, 'user_id');
     }
 
-    /**
-     * Relasi antara User dan Notifikasi
-     * User (adopter atau shelter) bisa menerima banyak notifikasi
-     */
+    //user bisa mendapatkan banyak notifikasi
     public function notifikasi()
     {
-        return $this->hasMany(Notifikasi::class, 'id_user');
+        return $this->hasMany(Notifikasi::class, 'user_id');
     }
 
-    /**
-     * Relasi antara User dan PermohonanAdopsi
-     * Seorang user (adopter) bisa membuat banyak permohonan adopsi
-     */
+    //user bisa mengajukan banyak permohonan adopsi
     public function permohonanAdopsi()
     {
-        return $this->hasMany(PermohonanAdopsi::class, 'id_user');
+        return $this->hasMany(PermohonanAdopsi::class, 'user_id');
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class, 'user_id');
     }
 
     /**

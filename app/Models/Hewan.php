@@ -29,4 +29,9 @@ class Hewan extends Model
     {
         return $this->hasMany(PermohonanAdopsi::class, 'hewan_id');
     }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class, 'hewan_id');
+    }
 }

@@ -22,8 +22,9 @@ class AuthController extends Controller
             'email'     => $request->email,
             'password'  => bcrypt($request->password),
             'role'      => 'user', // default
-            'no_telp'   => $request->no_telp ?? '-',
-            'alamat'    => $request->alamat ?? '-',
+            'no_telp'   => $request->no_telp,
+            'tgl_lahir' => $request->tgl_lahir,
+            'jenis_kelamin' => $request->jenis_kelamin,
         ]);
 
         return response()->json([

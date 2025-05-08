@@ -19,7 +19,8 @@ class AdminSeeder extends Seeder
             'password' => Hash::make('admin123'),
             'role' => 'admin',
             'no_telp' => '08123456789',
-            'alamat' => 'jl.hasanudin no 1',
+            'tgl_lahir' => '2000-01-01',
+            'jenis_kelamin' => 'Laki-laki',
         ]);
     }
 }

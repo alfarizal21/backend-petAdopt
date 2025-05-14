@@ -12,11 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('hewan', function (Blueprint $table) {
-            $table->id(); 
+            $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->string('image')->nullable();
             $table->string('nama');
-            $table->string('jenis');
-            $table->integer('usia');
+            $table->enum('jenis_kelamin', ['jantan', 'betina']);
+            $table->string('warna');
+            $table->string('jenis_hewan');
+            $table->integer('umur');
             $table->enum('status', ['tersedia', 'tidak tersedia']);
             $table->text('deskripsi')->nullable();
             $table->timestamps();

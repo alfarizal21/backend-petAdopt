@@ -13,9 +13,12 @@ class Hewan extends Model
 
     protected $fillable = [
         'user_id',
+        'image',
         'nama',
-        'jenis',
-        'usia',
+        'jenis_kelamin',
+        'warna',
+        'jenis_hewan',
+        'umur',
         'status',
         'deskripsi'
     ];

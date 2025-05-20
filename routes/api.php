@@ -39,7 +39,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('/profile', [ProfileController::class, 'profile']);
         Route::get('/profile/detail', [ProfileController::class, 'detailProfile']);
-        Route::put('/profile', [ProfileController::class, 'updateProfile']);
+        Route::put('/profile/update', [ProfileController::class, 'updateProfile']);
     });
 
     // === ARTIKEL ===

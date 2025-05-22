@@ -88,7 +88,7 @@ class HewanController extends Controller
         ]);
 
         return response()->json([
-            'message' => 'Hewan added successfully',
+            'message' => 'Added successfully',
         ], 201);
     }
 
@@ -96,7 +96,7 @@ class HewanController extends Controller
     {
         $hewan = Hewan::find($id);
         if (!$hewan) {
-            return response()->json(['message' => 'Hewan not found'], 404);
+            return response()->json(['message' => 'Not found'], 404);
         }
 
         $request->validate([
@@ -122,7 +122,7 @@ class HewanController extends Controller
         $hewan->save();
 
         return response()->json([
-            'message' => 'Hewan updated successfully',
+            'message' => 'Updated successfully',
         ]);
     }
 

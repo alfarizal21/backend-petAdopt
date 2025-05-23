@@ -33,6 +33,32 @@ class AuthController extends Controller
         ]);
     }
 
+    // public function login(Request $request)
+    // {
+    //     $request->validate([
+    //         'email'     => 'required|email',
+    //         'password'  => 'required'
+    //     ]);
+
+    //     $user = User::where('email', $request->email)->first();
+
+    //     if (! $user->id || ! Hash::check($request->password, $user->password)) {
+    //         throw ValidationException::withMessages([
+    //             'email' => ['Email or password not match.'],
+    //         ]);
+    //     }
+
+    //     $token = $user->createToken('api_token')->plainTextToken;
+
+    //     return response()->json([
+    //         'message' => 'Login successfully',
+    //         'data' => [
+    //         // 'user'  => $user,
+    //         'token' => $token
+    //         ]
+    //     ]);
+    // }
+
     public function login(Request $request)
     {
         $request->validate([
@@ -42,9 +68,9 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if (! $user->id || ! Hash::check($request->password, $user->password)) {
+        if (! $user || ! Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
-                'email' => ['Email or password not match.'],
+                'email' => ['Email not found or password incorrect.'],
             ]);
         }
 
@@ -53,8 +79,7 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Login successfully',
             'data' => [
-            // 'user'  => $user,
-            'token' => $token
+                'token' => $token
             ]
         ]);
     }

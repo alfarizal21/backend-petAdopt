@@ -182,4 +182,16 @@ class HewanController extends Controller
             'data' => $hewan
         ]);
     }
+
+    public function myPets()
+    {
+        $user = Auth::user();
+
+        $hewans = $user->hewan()->with('user')->get();
+
+        return response()->json([
+            'message' => 'Get your pets successfully',
+            'data' => $hewans
+        ]);
+    }
 }

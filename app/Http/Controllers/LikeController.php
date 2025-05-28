@@ -33,13 +33,20 @@ class LikeController extends Controller
         return response()->json(['message' => 'Liked']);
     }
 
-    // Ambil daftar hewan favorit berdasarkan jumlah like terbanyak
     public function favoriteHewan()
     {
         $hewans = Hewan::withCount('likes')
             ->orderByDesc('likes_count')
             ->take(10)
-            ->get();
+            ->get()
+            ->map(function ($hewan) {
+                return [
+                    'image' => $hewan->image,
+                    'nama' => $hewan->nama,
+                    'status' => $hewan->status,
+                    'likes_count' => $hewan->likes_count
+                ];
+            });
 
         return response()->json([
             'message' => 'Get successfully',

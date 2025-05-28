@@ -41,6 +41,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/profile/detail', [ProfileController::class, 'detailProfile']);
         Route::put('/profile/update', [ProfileController::class, 'updateProfile']);
         Route::put('/update-password', [ProfileController::class, 'updatePassword']);
+        Route::get('/profile/my-pets', [HewanController::class, 'myPets']);
     });
 
     // === ARTIKEL ===

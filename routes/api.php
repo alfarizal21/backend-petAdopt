@@ -36,12 +36,15 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     //profile
-    Route::middleware('auth:sanctum')->group(function () {
+    Route::middleware('role:user,shelter,admin')->group(function () {
         Route::get('/profile', [ProfileController::class, 'profile']);
         Route::get('/profile/detail', [ProfileController::class, 'detailProfile']);
         Route::put('/profile/update', [ProfileController::class, 'updateProfile']);
         Route::put('/update-password', [ProfileController::class, 'updatePassword']);
         Route::get('/profile/my-pets', [HewanController::class, 'myPets']);
+        Route::post('/profile/photo', [ProfileController::class, 'uploadFotoProfil']);
+        Route::get('/profile/photo', [ProfileController::class, 'getFotoProfil']);
+        Route::delete('/profile/photo', [ProfileController::class, 'deleteFotoProfil']);
     });
 
     // === ARTIKEL ===

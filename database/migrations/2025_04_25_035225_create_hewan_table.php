@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('nama');
             $table->enum('jenis_kelamin', ['jantan', 'betina']);
             $table->string('warna');
-            $table->string('jenis_hewan');
+            $table->enum('jenis_hewan', ['anjing', 'kucing']);
             $table->integer('umur');
             $table->enum('status', ['tersedia', 'tidak tersedia']);
             $table->text('deskripsi')->nullable();

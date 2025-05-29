@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -75,5 +76,84 @@ class ProfileController extends Controller
         ]);
 
         return response()->json(['message' => 'Password updated successfully']);
+    }
+
+    public function uploadFotoProfil(Request $request)
+    {
+        $request->validate([
+            'profile_photo' => 'required|image|mimes:jpg,jpeg,png|max:2048'
+        ]);
+
+        $user = Auth::user();
+
+        // Hapus foto lama jika ada
+        if ($user->profile_photo && Storage::exists('public/profile_photos/' . $user->profile_photo)) {
+            Storage::delete('public/profile_photos/' . $user->profile_photo);
+        }
+
+        $imagePath = $request->file('profile_photo')->store('profile_photos', 'public');
+        $filename = basename($imagePath);
+
+        $user->profile_photo = $filename;
+        $user->save();
+
+        return response()->json([
+            'message' => 'Profile photo uploaded successfully.'
+        ]);
+    }
+
+    // public function getFotoProfil()
+    // {
+    //     $user = Auth::user();
+
+    //     if (!$user->profile_photo || !Storage::exists('public/profile_photos/' . $user->profile_photo)) {
+    //         return response()->json(['message' => 'No profile photo found'], 404);
+    //     }
+
+    //     return response()->json([
+    //         'message' => 'Profile photo retrieved.',
+    //         'file_url' => asset('storage/profile_photos/' . $user->profile_photo)
+    //     ]);
+    // }
+
+    public function getFotoProfil()
+    {
+        $user = Auth::user();
+
+        if (!$user->profile_photo) {
+            return response()->json(['message' => 'No profile photo set in database'], 404);
+        }
+
+        $filePath = 'profile_photos/' . $user->profile_photo;
+
+        if (!Storage::disk('public')->exists($filePath)) {
+            return response()->json([
+                'message' => 'Profile photo file not found in storage',
+            ], 404);
+        }
+
+        return response()->json([
+            'message' => 'Get photo profile success.',
+            'file_url' => asset('storage/' . $filePath)
+        ]);
+    }
+
+    public function deleteFotoProfil()
+    {
+        $user = Auth::user();
+
+        $filePath = 'profile_photos/' . $user->profile_photo;
+
+        if (!$user->profile_photo || !Storage::disk('public')->exists($filePath)) {
+            return response()->json(['message' => 'No profile photo to delete'], 404);
+        }
+
+        // Hapus file dari storage disk 'public'
+        Storage::disk('public')->delete($filePath);
+
+        // Hapus referensi dari database
+        $user->update(['profile_photo' => null]);
+
+        return response()->json(['message' => 'Profile photo deleted.']);
     }
 }

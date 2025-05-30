@@ -25,27 +25,6 @@ class NotifikasiController extends Controller
         return response()->json($notifikasi);
     }
 
-    public function store(Request $request)
-    {
-        // $request->validate([
-        //     'user_id' => 'required|exists:users,user_id',
-        //     'judul' => 'required|string|max:255',
-        //     'pesan' => 'required|string',
-        //     'status' => 'required|in:dibaca,belum dibaca',
-        //     'send_at' => 'nullable|date',
-        // ]);
-
-        // $notifikasi = Notifikasi::create([
-        //     'user_id' => $request->user_id,
-        //     'judul' => $request->judul,
-        //     'pesan' => $request->pesan,
-        //     'status' => $request->status,
-        //     'send_at' => $request->send_at,
-        // ]);
-
-        // return response()->json(['message' => 'Notifikasi berhasil ditambahkan', 'data' => $notifikasi], 201);
-    }
-
     public function updateStatus($id)
     {
         $notifikasi = Notifikasi::find($id);

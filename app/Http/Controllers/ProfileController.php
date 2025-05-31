@@ -26,7 +26,7 @@ class ProfileController extends Controller
 
         return response()->json([
             'name' => $user->name,
-            'tanggal_lahir' => $user->tanggal_lahir,
+            'tanggal_lahir' => optional($user->tgl_lahir)->format('Y-m-d'),
             'jenis_kelamin' => $user->jenis_kelamin,
             'no_telp' => $user->no_telp,
             'email' => $user->email

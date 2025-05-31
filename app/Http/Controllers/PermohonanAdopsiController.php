@@ -9,55 +9,8 @@ use Illuminate\Support\Facades\Auth;
 
 class PermohonanAdopsiController extends Controller
 {
-    // public function index()
-    // {
-    //     $user = Auth::user();
-
-    //     if ($user->role === 'user') {
-    //         $permohonan = PermohonanAdopsi::with(['user', 'hewan'])
-    //             ->where('user_id', $user->id)
-    //             ->get();
-    //     }
-
-    //     elseif ($user->role === 'shelter') {
-    //         $permohonan = PermohonanAdopsi::with(['user', 'hewan'])
-    //             ->whereHas('hewan', function ($query) use ($user) {
-    //                 $query->where('user_id', $user->id);
-    //             })
-    //             ->get();
-    //     } else {
-    //         return response()->json(['message' => "Don't have permission"], 403);
-    //     }
-
-    //     return response()->json($permohonan);
-    // }
-
-    // public function show($id)
-    // {
-    //     $user = Auth::user();
-
-    //     $permohonan = PermohonanAdopsi::with(['user', 'hewan'])->find($id);
-
-    //     if (!$permohonan) {
-    //         return response()->json(['message' => 'Not found'], 404);
-    //     }
-
-    //     if ($user->role === 'user' && $permohonan->user_id !== $user->id) {
-    //         return response()->json(['message' => "Don't have permission"], 403);
-    //     }
-
-    //     if (
-    //         $user->role === 'shelter' &&
-    //         $permohonan->hewan &&
-    //         $permohonan->hewan->user_id !== $user->id
-    //     ) {
-    //         return response()->json(['message' => "Don't have permission"], 403);
-    //     }
-
-    //     return response()->json($permohonan);
-    // }
-
-    public function store(Request $request) //formulir pengajuan adopsi
+    //formulir pengajuan adopsi
+    public function store(Request $request)
     {
         $user = Auth::user();
 
@@ -108,57 +61,8 @@ class PermohonanAdopsiController extends Controller
         ], 201);
     }
 
-    // public function updateStatus(Request $request, $id)
-    // {
-    //     $permohonan = PermohonanAdopsi::with('hewan')->find($id);
-
-    //     if (!$permohonan) {
-    //         return response()->json(['message' => 'Not found'], 404);
-    //     }
-
-    //     $user = Auth::user();
-
-    //     if (
-    //         !($user->role === 'shelter' || $permohonan->hewan->user_id === $user->id)
-    //     ) {
-    //         return response()->json(['message' => 'Updated successfully'], 403);
-    //     }
-
-    //     $request->validate([
-    //         'status' => 'required|in:diterima,menunggu,ditolak'
-    //     ]);
-
-    //     $permohonan->status = $request->status;
-    //     $permohonan->save();
-
-    //     return response()->json([
-    //         'message' => 'Status updated successfully',
-    //         // 'data' => $permohonan
-    //     ]);
-    // }
-
-    // public function destroy($id)
-    // {
-    //     $permohonan = PermohonanAdopsi::with('hewan')->find($id);
-
-    //     if (!$permohonan) {
-    //         return response()->json(['message' => 'Not found'], 404);
-    //     }
-
-    //     $user = Auth::user();
-
-    //     if (
-    //         !($user->role === 'shelter' || $permohonan->hewan->user_id === $user->id)
-    //     ) {
-    //         return response()->json(['message' => "Don't have permission"], 403);
-    //     }
-
-    //     $permohonan->delete();
-
-    //     return response()->json(['message' => 'Deleted successfully']);
-    // }
-
-    public function listUserPermohonanHewan() // daftar hewan yang telah diajukan adopsinya oleh user
+    // daftar hewan yang telah diajukan adopsinya oleh user
+    public function listUserPermohonanHewan()
     {
         $user = Auth::user();
 
@@ -180,7 +84,8 @@ class PermohonanAdopsiController extends Controller
         ]);
     }
 
-    public function showDetailPermohonan($id) //mengembalikan data permohonan adopsi berdasarkan id permohonan
+    //mengembalikan data permohonan adopsi berdasarkan id permohonan
+    public function showDetailPermohonan($id)
     {
         $user = Auth::user();
 
@@ -211,38 +116,8 @@ class PermohonanAdopsiController extends Controller
         ]);
     }
 
-    // public function showPermohonanByHewan($hewanId) //mengembalikan data permohonan adopsi berdasarkan id hewan
-    // {
-    //     $user = Auth::user();
-
-    //     $permohonan = PermohonanAdopsi::where('hewan_id', $hewanId)
-    //         ->where('user_id', $user->id)
-    //         ->first();
-
-    //     if (!$permohonan) {
-    //         return response()->json(['message' => 'Data tidak ditemukan'], 404);
-    //     }
-
-    //     return response()->json([
-    //         'message' => 'Detail permohonan ditemukan',
-    //         'data' => [
-    //             'nama_lengkap' => $permohonan->nama,
-    //             'umur' => $permohonan->umur,
-    //             'no_hp' => $permohonan->no_hp,
-    //             'email' => $permohonan->email,
-    //             'nik' => $permohonan->nik,
-    //             'jenis_kelamin' => $permohonan->jenis_kelamin,
-    //             'tempat_tanggal_lahir' => $permohonan->tempat_tanggal_lahir,
-    //             'pekerjaan' => $permohonan->pekerjaan,
-    //             'alamat' => $permohonan->alamat,
-    //             'riwayat_adopsi' => $permohonan->riwayat_adopsi,
-    //             'status' => $permohonan->status,
-    //             'tanggal_permohonan' => $permohonan->tanggal_permohonan,
-    //         ]
-    //     ]);
-    // }
-
-    public function listPemohonByHewan($hewanId) //mengambil daftar pemohon adopsi berdasarkan id hewan
+    //mengambil daftar pemohon adopsi berdasarkan id hewan
+    public function listPemohonByHewan($hewanId)
     {
         $user = Auth::user();
 
@@ -272,7 +147,8 @@ class PermohonanAdopsiController extends Controller
         ]);
     }
 
-    public function showDetailByHewanAndUser($hewanId, $userId) //mengambil detail permohonan adopsi berdasarkan id hewan dan id user
+    //mengambil detail permohonan adopsi berdasarkan id hewan dan id user
+    public function showDetailByHewanAndUser($hewanId, $userId)
     {
         $authUser = Auth::user();
 
@@ -311,5 +187,103 @@ class PermohonanAdopsiController extends Controller
                 'tanggal_permohonan' => $permohonan->tanggal_permohonan,
             ]
         ]);
+    }
+
+    //mengupdate status permohonan adopsi sekaligus mengirim notifikasi ke user yang mengajukan permohonan adopsi
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:diterima,ditolak',
+        ]);
+
+        $permohonan = \App\Models\PermohonanAdopsi::find($id);
+
+        if (!$permohonan) {
+            return response()->json(['message' => 'Permohonan tidak ditemukan'], 404);
+        }
+
+        $permohonan->status = $request->status;
+        $permohonan->save();
+
+        // Kirim notifikasi ke user yang mengajukan
+        $judul = $request->status === 'diterima' ? 'Permohonan Diterima' : 'Permohonan Ditolak';
+        $pesan = $request->status === 'diterima'
+            ? "Selamat! Permohonan adopsi Anda untuk hewan bernama {$permohonan->hewan->nama} telah diterima."
+            : "Maaf, permohonan adopsi Anda untuk hewan bernama {$permohonan->hewan->nama} ditolak.";
+
+        \App\Models\Notifikasi::create([
+            'user_id' => $permohonan->user_id,
+            'judul' => $judul,
+            'pesan' => $pesan,
+            'status' => 'belum dibaca',
+            'send_at' => now(),
+        ]);
+
+        return response()->json([
+            'message' => "Permohonan berhasil {$request->status}",
+            'status' => $request->status
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $user = Auth::user();
+
+        $permohonan = PermohonanAdopsi::where('id', $id)
+            ->where('user_id', $user->id)
+            ->first();
+
+        if (!$permohonan) {
+            return response()->json(['message' => 'Permohonan tidak ditemukan'], 404);
+        }
+
+        if ($permohonan->status !== 'menunggu') {
+            return response()->json(['message' => 'Permohonan tidak dapat diubah karena sudah diproses'], 403);
+        }
+
+        $request->validate([
+            'nama' => 'required',
+            'umur' => 'required|integer',
+            'no_hp' => 'required|string',
+            'email' => 'required|email',
+            'nik' => 'required|string|size:16|regex:/^[0-9]+$/',
+            'jenis_kelamin' => 'required|in:laki-laki,perempuan',
+            'tempat_tanggal_lahir' => 'required',
+            'pekerjaan' => 'required',
+            'alamat' => 'required',
+            'riwayat_adopsi' => 'nullable',
+        ]);
+
+        $permohonan->update([
+            'nama' => $request->nama,
+            'umur' => $request->umur,
+            'no_hp' => $request->no_hp,
+            'email' => $request->email,
+            'nik' => $request->nik,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'tempat_tanggal_lahir' => $request->tempat_tanggal_lahir,
+            'pekerjaan' => $request->pekerjaan,
+            'alamat' => $request->alamat,
+            'riwayat_adopsi' => $request->riwayat_adopsi,
+        ]);
+
+        return response()->json(['message' => 'Permohonan berhasil diperbarui']);
+    }
+
+    public function destroy($id)
+    {
+        $user = Auth::user();
+
+        $permohonan = PermohonanAdopsi::where('id', $id)
+            ->where('user_id', $user->id)
+            ->first();
+
+        if (!$permohonan) {
+            return response()->json(['message' => 'Permohonan tidak ditemukan'], 404);
+        }
+
+        $permohonan->delete();
+
+        return response()->json(['message' => 'Permohonan berhasil dihapus']);
     }
 }

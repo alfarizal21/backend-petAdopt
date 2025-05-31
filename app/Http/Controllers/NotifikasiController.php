@@ -8,49 +8,46 @@ use Illuminate\Support\Facades\Auth;
 
 class NotifikasiController extends Controller
 {
-    public function index()
+    public function getUserNotifications()
     {
         $user = Auth::user();
-        return response()->json($user->notifikasi);
-    }
 
-    public function show($id)
-    {
-        $notifikasi = Notifikasi::find($id);
+        $notifikasi = Notifikasi::where('user_id', $user->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
 
-        if (!$notifikasi) {
-            return response()->json(['message' => 'Not found'], 404);
+        if ($notifikasi->isEmpty()) {
+            return response()->json([
+                'message' => 'Belum ada notifikasi',
+            ], 200);
         }
 
-        return response()->json($notifikasi);
+        return response()->json([
+            'message' => 'Daftar notifikasi ditemukan',
+            'data' => $notifikasi,
+        ]);
     }
 
-    public function updateStatus($id)
+    // Menandai notifikasi sebagai dibaca
+    public function markAsRead($id)
     {
-        $notifikasi = Notifikasi::find($id);
+        $notifikasi = Notifikasi::where('id', $id)
+            ->where('user_id', Auth::id())
+            ->first();
 
         if (!$notifikasi) {
-            return response()->json(['message' => 'Not found'], 404);
+            return response()->json(['message' => 'Notifikasi tidak ditemukan'], 404);
+        }
+
+        if ($notifikasi->status === 'dibaca') {
+            return response()->json(['message' => 'Notifikasi sudah dibaca'], 200);
         }
 
         $notifikasi->update(['status' => 'dibaca']);
 
         return response()->json([
-            'message' => 'Updated successfully',
-            // 'data' => $notifikasi
+            'message' => 'Notifikasi ditandai sebagai dibaca',
+            'data' => $notifikasi
         ]);
-    }
-
-    public function destroy($id)
-    {
-        $notifikasi = Notifikasi::find($id);
-
-        if (!$notifikasi) {
-            return response()->json(['message' => 'Not found'], 404);
-        }
-
-        $notifikasi->delete();
-
-        return response()->json(['message' => 'Deleted successfully']);
     }
 }

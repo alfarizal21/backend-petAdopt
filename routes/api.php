@@ -60,10 +60,9 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     // === NOTIFIKASI ===
-    Route::middleware('role:user,shelter')->group(function () {
-        Route::get('/notifikasi', [NotifikasiController::class, 'index']);
-        Route::get('/notifikasi/{id}', [NotifikasiController::class, 'show']);
-        Route::delete('/notifikasi/{id}', [NotifikasiController::class, 'destroy']);
+    Route::middleware('role:user')->group(function () {
+        Route::get('/notifikasi', [NotifikasiController::class, 'getUserNotifications']);
+        Route::patch('/notifikasi/{id}/read', [NotifikasiController::class, 'markAsRead']);
     });
 
     // === PERMOHONAN ADOPSI ===
@@ -73,14 +72,12 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::middleware('role:user,shelter')->group(function () {
         Route::get('/permohonan/daftar-permohonan/list-hewan', [PermohonanAdopsiController::class, 'listUserPermohonanHewan']); //mengembalikan daftar hewan yang telah diajukan adopsi oleh user
-        // Route::get('/permohonan/hewan/{hewanId}', [PermohonanAdopsiController::class, 'showPermohonanByHewan']); //mengembalikan data permohonan adopsi berdasarkan id hewan
         Route::get('/permohonan/{id}', [PermohonanAdopsiController::class, 'showDetailPermohonan']); //mengembalikan data permohonan adopsi berdasarkan id
         Route::get('/permohonan/hewan/{id}/pemohon', [PermohonanAdopsiController::class, 'listPemohonByHewan']); //mengembalikan daftar pemohon adopsi berdasarkan id hewan
         Route::get('/permohonan/hewan/{hewanId}/user/{userId}', [PermohonanAdopsiController::class, 'showDetailByHewanAndUser']); //mengembalikan detail permohonan adopsi berdasarkan id hewan dan id user
-        Route::get('/permohonan-adopsi', [PermohonanAdopsiController::class, 'index']);
-        Route::get('/permohonan-adopsi/{id}', [PermohonanAdopsiController::class, 'show']);
-        Route::put('/permohonan-adopsi/{id}/status', [PermohonanAdopsiController::class, 'updateStatus']);
-        Route::delete('/permohonan-adopsi/{id}', [PermohonanAdopsiController::class, 'destroy']);
+        Route::put('/permohonan/{id}/status', [PermohonanAdopsiController::class, 'updateStatus']); //mengupdate status permohonan adopsi sekaligus mengirim notifikasi ke user yang mengajukan permohonan adopsi
+        Route::put('/permohonan/{id}', [PermohonanAdopsiController::class, 'update']);
+        Route::delete('/permohonan/{id}', [PermohonanAdopsiController::class, 'destroy']);
     });
 });
 

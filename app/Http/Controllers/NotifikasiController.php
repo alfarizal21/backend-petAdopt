@@ -18,12 +18,12 @@ class NotifikasiController extends Controller
 
         if ($notifikasi->isEmpty()) {
             return response()->json([
-                'message' => 'Belum ada notifikasi',
+                'message' => 'No notifications yet',
             ], 200);
         }
 
         return response()->json([
-            'message' => 'Daftar notifikasi ditemukan',
+            'message' => 'Get successfully',
             'data' => $notifikasi,
         ]);
     }
@@ -36,17 +36,17 @@ class NotifikasiController extends Controller
             ->first();
 
         if (!$notifikasi) {
-            return response()->json(['message' => 'Notifikasi tidak ditemukan'], 404);
+            return response()->json(['message' => 'Not found'], 404);
         }
 
         if ($notifikasi->status === 'dibaca') {
-            return response()->json(['message' => 'Notifikasi sudah dibaca'], 200);
+            return response()->json(['message' => 'Notification already read'], 200);
         }
 
         $notifikasi->update(['status' => 'dibaca']);
 
         return response()->json([
-            'message' => 'Notifikasi ditandai sebagai dibaca',
+            'message' => 'Notification already read',
             'data' => $notifikasi
         ]);
     }

@@ -79,7 +79,7 @@ class PermohonanAdopsiController extends Controller
             });
 
         return response()->json([
-            'message' => 'Daftar pengajuan adopsi hewan',
+            'message' => 'Get successfully',
             'data' => $permohonan
         ]);
     }
@@ -94,11 +94,11 @@ class PermohonanAdopsiController extends Controller
             ->first();
 
         if (!$permohonan) {
-            return response()->json(['message' => 'Data tidak ditemukan'], 404);
+            return response()->json(['message' => 'Not found'], 404);
         }
 
         return response()->json([
-            'message' => 'Detail permohonan ditemukan',
+            'message' => 'Get successfully',
             'data' => [
                 'nama_lengkap' => $permohonan->nama,
                 'umur' => $permohonan->umur,
@@ -127,7 +127,7 @@ class PermohonanAdopsiController extends Controller
             ->first();
 
         if (!$hewan) {
-            return response()->json(['message' => 'Hewan tidak ditemukan atau bukan milik Anda'], 404);
+            return response()->json(['message' => 'Animal not found or not owned by you.'], 404);
         }
 
         // Ambil daftar permohonan + user pemohon
@@ -137,7 +137,7 @@ class PermohonanAdopsiController extends Controller
 
         // Kembalikan hanya nama dan foto user pemohon
         return response()->json([
-            'message' => 'Daftar pemohon ditemukan',
+            'message' => 'Get successfully',
             'data' => $permohonan->map(function ($item) {
                 return [
                     'nama' => $item->user->name,
@@ -158,7 +158,7 @@ class PermohonanAdopsiController extends Controller
             ->first();
 
         if (!$hewan) {
-            return response()->json(['message' => 'Hewan tidak ditemukan atau bukan milik Anda'], 404);
+            return response()->json(['message' => 'Animal not found or not owned by you.'], 404);
         }
 
         // Ambil permohonan user itu ke hewan ini
@@ -167,11 +167,11 @@ class PermohonanAdopsiController extends Controller
             ->first();
 
         if (!$permohonan) {
-            return response()->json(['message' => 'Permohonan tidak ditemukan'], 404);
+            return response()->json(['message' => 'Not found'], 404);
         }
 
         return response()->json([
-            'message' => 'Detail permohonan ditemukan',
+            'message' => 'Get successfully',
             'data' => [
                 'nama_lengkap' => $permohonan->nama,
                 'umur' => $permohonan->umur,
@@ -199,7 +199,7 @@ class PermohonanAdopsiController extends Controller
         $permohonan = \App\Models\PermohonanAdopsi::find($id);
 
         if (!$permohonan) {
-            return response()->json(['message' => 'Permohonan tidak ditemukan'], 404);
+            return response()->json(['message' => 'Not found'], 404);
         }
 
         $permohonan->status = $request->status;
@@ -234,11 +234,11 @@ class PermohonanAdopsiController extends Controller
             ->first();
 
         if (!$permohonan) {
-            return response()->json(['message' => 'Permohonan tidak ditemukan'], 404);
+            return response()->json(['message' => 'Not found'], 404);
         }
 
         if ($permohonan->status !== 'menunggu') {
-            return response()->json(['message' => 'Permohonan tidak dapat diubah karena sudah diproses'], 403);
+            return response()->json(['message' => "Request can't be changed because it's already processed."], 403);
         }
 
         $request->validate([
@@ -267,7 +267,7 @@ class PermohonanAdopsiController extends Controller
             'riwayat_adopsi' => $request->riwayat_adopsi,
         ]);
 
-        return response()->json(['message' => 'Permohonan berhasil diperbarui']);
+        return response()->json(['message' => 'Updated successfully']);
     }
 
     public function destroy($id)
@@ -279,11 +279,11 @@ class PermohonanAdopsiController extends Controller
             ->first();
 
         if (!$permohonan) {
-            return response()->json(['message' => 'Permohonan tidak ditemukan'], 404);
+            return response()->json(['message' => 'Not found'], 404);
         }
 
         $permohonan->delete();
 
-        return response()->json(['message' => 'Permohonan berhasil dihapus']);
+        return response()->json(['message' => 'Deleted successfully']);
     }
 }

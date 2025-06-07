@@ -2,16 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Hewan;
 use App\Models\User;
+use App\Models\Hewan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class HewanController extends Controller
 {
+    // public function index()
+    // {
+    //     $hewan = Hewan::with('user')->get();
+    //     return response()->json([
+    //         'message' => 'Get successfully',
+    //         'data' => $hewan
+    //     ]);
+    // }
+
     public function index()
     {
         $hewan = Hewan::with('user')->get();
+
+        //pake asset('') biar url nya jadi lengkap(beserta http..)
+        $hewan->transform(function ($item) {
+            $item->image = $item->image ? asset('storage/' . $item->image) : null;
+            return $item;
+        });
+
         return response()->json([
             'message' => 'Get successfully',
             'data' => $hewan

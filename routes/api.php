@@ -47,18 +47,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/profile/photo', [ProfileController::class, 'deleteFotoProfil']);
     });
 
-    // === ARTIKEL ===
-    Route::middleware('role:user,shelter,admin')->group(function () {
-        Route::get('/artikel', [ArtikelController::class, 'index']);
-        Route::get('/artikel/{id}', [ArtikelController::class, 'show']);
-    });
-
-    Route::middleware('role:admin')->group(function () {
-        Route::post('/artikel', [ArtikelController::class, 'store']);
-        Route::put('/artikel/{id}', [ArtikelController::class, 'update']);
-        Route::delete('/artikel/{id}', [ArtikelController::class, 'destroy']);
-    });
-
     // === NOTIFIKASI ===
     Route::middleware('role:user')->group(function () {
         Route::get('/notifikasi', [NotifikasiController::class, 'getUserNotifications']);
@@ -78,6 +66,18 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/permohonan/{id}/status', [PermohonanAdopsiController::class, 'updateStatus']); //mengupdate status permohonan adopsi sekaligus mengirim notifikasi ke user yang mengajukan permohonan adopsi
         Route::put('/permohonan/{id}', [PermohonanAdopsiController::class, 'update']);
         Route::delete('/permohonan/{id}', [PermohonanAdopsiController::class, 'destroy']);
+    });
+
+    // === ARTIKEL ===
+    Route::middleware('role:user,shelter,admin')->group(function () {
+        Route::get('/artikel', [ArtikelController::class, 'index']);
+        Route::get('/artikel/{id}', [ArtikelController::class, 'show']);
+    });
+
+    Route::middleware('role:admin')->group(function () {
+        Route::post('/artikel', [ArtikelController::class, 'store']);
+        Route::put('/artikel/{id}', [ArtikelController::class, 'update']);
+        Route::delete('/artikel/{id}', [ArtikelController::class, 'destroy']);
     });
 });
 

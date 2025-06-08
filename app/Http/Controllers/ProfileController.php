@@ -134,7 +134,7 @@ class ProfileController extends Controller
 
         return response()->json([
             'message' => 'Get photo profile success.',
-            'file_url' => asset('storage/' . $filePath)
+            'profile_photo' => asset('storage/' . $filePath)
         ]);
     }
 

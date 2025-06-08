@@ -43,11 +43,29 @@ class HewanController extends Controller
             return response()->json(['message' => 'Not found'], 404);
         }
 
+        $hewan->image = $hewan->image
+            ? asset('storage/' . $hewan->image)
+            : null;
+
         return response()->json([
             'message' => 'Get successfully',
             'data' => $hewan
         ]);
     }
+
+    // public function show($id)
+    // {
+    //     $hewan = Hewan::with('user')->find($id);
+
+    //     if (!$hewan) {
+    //         return response()->json(['message' => 'Not found'], 404);
+    //     }
+
+    //     return response()->json([
+    //         'message' => 'Get successfully',
+    //         'data' => $hewan
+    //     ]);
+    // }
 
     // public function store(Request $request)
     // {
@@ -206,9 +224,28 @@ class HewanController extends Controller
 
         $hewans = $user->hewan()->with('user')->get();
 
+        $hewans->transform(function ($item) {
+            $item->image = $item->image
+                ? asset('storage/' . $item->image)
+                : null;
+            return $item;
+        });
+
         return response()->json([
             'message' => 'Get your pets successfully',
             'data' => $hewans
         ]);
     }
+
+    // public function myPets()
+    // {
+    //     $user = Auth::user();
+
+    //     $hewans = $user->hewan()->with('user')->get();
+
+    //     return response()->json([
+    //         'message' => 'Get your pets successfully',
+    //         'data' => $hewans
+    //     ]);
+    // }
 }

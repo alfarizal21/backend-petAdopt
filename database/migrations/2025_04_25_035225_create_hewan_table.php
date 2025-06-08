@@ -21,6 +21,7 @@ return new class extends Migration
             $table->enum('jenis_hewan', ['anjing', 'kucing']);
             $table->integer('umur');
             $table->enum('status', ['tersedia', 'tidak tersedia']);
+            $table->string('lokasi')->nullable();
             $table->text('deskripsi')->nullable();
             $table->timestamps();
         });

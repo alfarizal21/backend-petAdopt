@@ -20,7 +20,8 @@ class Hewan extends Model
         'jenis_hewan',
         'umur',
         'status',
-        'deskripsi'
+        'deskripsi',
+        'lokasi'
     ];
 
     public function user()

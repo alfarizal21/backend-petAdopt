@@ -98,11 +98,12 @@ class HewanController extends Controller
             'nama' => 'required|string',
             'jenis_kelamin' => 'required|in:jantan,betina',
             'warna' => 'required|string',
-            'jenis_hewan' => 'required|string',
+            'jenis_hewan' => 'required|in:anjing,kucing',
             'umur' => 'required|integer',
             'status' => 'required|in:tersedia,tidak tersedia',
             'deskripsi' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'lokasi' => 'nullable|string',
         ]);
 
         $imagePath = null;
@@ -119,6 +120,7 @@ class HewanController extends Controller
             'jenis_hewan' => $request->jenis_hewan,
             'umur' => $request->umur,
             'status' => $request->status,
+            'lokasi' => $request->lokasi,
             'deskripsi' => $request->deskripsi
         ]);
 
@@ -142,17 +144,25 @@ class HewanController extends Controller
             'umur' => 'sometimes|required|integer',
             'status' => 'sometimes|required|in:tersedia,tidak tersedia',
             'deskripsi' => 'nullable|string',
+            'lokasi' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
+
+        $hewan->fill($request->only([
+            'nama',
+            'jenis_kelamin',
+            'warna',
+            'jenis_hewan',
+            'umur',
+            'status',
+            'deskripsi',
+            'lokasi'
+        ]));
 
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('hewan_images', 'public');
             $hewan->image = $imagePath;
         }
-
-        $hewan->update($request->only([
-            'nama', 'jenis_kelamin', 'warna', 'jenis_hewan', 'umur', 'status', 'deskripsi'
-        ]));
 
         $hewan->save();
 

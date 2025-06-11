@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HewanController;
 use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\ProfileController;
@@ -36,7 +37,7 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     //profile
-    Route::middleware('role:user,shelter,admin')->group(function () {
+    Route::middleware('role:user,shelter,admin')->prefix('user')->group(function () {
         Route::get('/profile', [ProfileController::class, 'profile']);
         Route::get('/profile/detail', [ProfileController::class, 'detailProfile']);
         Route::put('/profile/update', [ProfileController::class, 'updateProfile']);
@@ -78,6 +79,12 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/artikel', [ArtikelController::class, 'store']);
         Route::put('/artikel/{id}', [ArtikelController::class, 'update']);
         Route::delete('/artikel/{id}', [ArtikelController::class, 'destroy']);
+    });
+
+    // === ADMIN ===
+    Route::middleware('role:admin')->group(function () {
+        Route::get('/dashboard/user-stats', [AdminController::class, 'userStats']);
+        Route::get('/dashboard/hewan-stats', [AdminController::class, 'hewanStats']);
     });
 });
 

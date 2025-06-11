@@ -16,7 +16,7 @@ class RoleMiddleware
         $user = $request->user();
 
         if (! $user || ! in_array($user->role, $roles)) {
-            return response()->json(['message' => 'Maaf, kamu tidak punya izin untuk mengakses fitur ini.'], 403);
+            return response()->json(['message' => "Sorry, you don't have permission to access this feature."], 403);
         }
         return $next($request);
     }

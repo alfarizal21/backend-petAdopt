@@ -210,6 +210,24 @@ class HewanController extends Controller
         return response()->json(['message' => 'Deleted successfully']);
     }
 
+    // public function filterByJenis(Request $request, $jenis)
+    // {
+    //     $jenis = strtolower($jenis);
+
+    //     if (!in_array($jenis, ['kucing', 'anjing'])) {
+    //         return response()->json([
+    //             'message' => 'Invalid animal type. Please use "kucing" or "anjing".'
+    //         ], 400);
+    //     }
+
+    //     $hewan = Hewan::with('user')->where('jenis', $jenis)->get();
+
+    //     return response()->json([
+    //         'message' => 'Get successfully',
+    //         'data' => $hewan
+    //     ]);
+    // }
+
     public function filterByJenis(Request $request, $jenis)
     {
         $jenis = strtolower($jenis);
@@ -220,7 +238,14 @@ class HewanController extends Controller
             ], 400);
         }
 
-        $hewan = Hewan::with('user')->where('jenis', $jenis)->get();
+        $hewan = Hewan::with('user')
+            ->where('jenis_hewan', $jenis)
+            ->get();
+
+        $hewan->transform(function ($item) {
+            $item->image = $item->image ? asset('storage/' . $item->image) : null;
+            return $item;
+        });
 
         return response()->json([
             'message' => 'Get successfully',

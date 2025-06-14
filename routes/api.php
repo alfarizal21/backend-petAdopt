@@ -10,6 +10,7 @@ use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\NotifikasiController;
 use App\Http\Controllers\PermohonanAdopsiController;
+use App\Http\Controllers\PermohonanShelterController;
 
 // === ROUTE PUBLIC===
 Route::post('/register', [AuthController::class, 'register']);
@@ -60,6 +61,9 @@ Route::middleware('auth:sanctum')->group(function () {
         // artikel
         Route::get('/artikel', [ArtikelController::class, 'index']);
         Route::get('/artikel/{id}', [ArtikelController::class, 'show']);
+
+        // pengajuan shelter
+        Route::post('/pengajuan-shelter', [PermohonanShelterController::class, 'store']);
     });
 
     // === SHELTER ===
@@ -86,6 +90,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/profile/photo', [ProfileController::class, 'getFotoProfil']);
         Route::delete('/profile/photo', [ProfileController::class, 'deleteFotoProfil']);
 
+        // notifikasi
+        Route::get('/notifikasi', [NotifikasiController::class, 'getUserNotifications']);
+        Route::patch('/notifikasi/{id}/read', [NotifikasiController::class, 'markAsRead']);
+
         // permohonan adopsi
         Route::get('/permohonan/hewan/{id}/pemohon', [PermohonanAdopsiController::class, 'listPemohonByHewan']); //mengembalikan daftar pemohon adopsi berdasarkan id hewan
         Route::get('/permohonan/hewan/{hewanId}/user/{userId}', [PermohonanAdopsiController::class, 'showDetailByHewanAndUser']); //mengembalikan detail permohonan adopsi berdasarkan id hewan dan id user
@@ -108,6 +116,13 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/artikel', [ArtikelController::class, 'store']);
         Route::put('/artikel/{id}', [ArtikelController::class, 'update']);
         Route::delete('/artikel/{id}', [ArtikelController::class, 'destroy']);
+
+        // profile
+        Route::get('/profile', [ProfileController::class, 'profile']);
+
+        // pengajuan shelter
+        Route::get('daftar-permohonan-shelter', [AdminController::class, 'listPermohonanShelter']);
+        Route::post('permohonan-shelter/{id}/verifikasi', [AdminController::class, 'verifikasi']);
     });
 });
 

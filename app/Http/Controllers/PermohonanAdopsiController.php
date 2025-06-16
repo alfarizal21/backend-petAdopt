@@ -76,7 +76,7 @@ class PermohonanAdopsiController extends Controller
                     'hewan_id' => $item->hewan_id,
                     'permohonan_id' => $item->id,
                     'nama_hewan' => $item->hewan->nama,
-                    'gambar_hewan' => $item->hewan->image,
+                    'gambar_hewan' => $item->hewan->image? url('storage/' . $item->hewan->image): null,
                 ];
             });
 
@@ -149,7 +149,7 @@ class PermohonanAdopsiController extends Controller
                     'hewan_id' => $item->hewan_id,
                     'permohonan_id' => $item->id,
                     'nama' => $item->user->name,
-                    'profile_photo' => $item->user->profile_photo ? asset('storage/' . $item->user->profile_photo) : null,
+                    'profile_photo' => $item->user->profile_photo? url('storage/' . $item->user->profile_photo): null,
                 ];
             }),
         ]);

@@ -72,6 +72,8 @@ class PermohonanAdopsiController extends Controller
             ->get()
             ->map(function ($item) {
                 return [
+                    'user_id' => $item->user_id,
+                    'hewan_id' => $item->hewan_id,
                     'permohonan_id' => $item->id,
                     'nama_hewan' => $item->hewan->nama,
                     'gambar_hewan' => $item->hewan->image,
@@ -100,6 +102,9 @@ class PermohonanAdopsiController extends Controller
         return response()->json([
             'message' => 'Get successfully',
             'data' => [
+                'user_id' => $permohonan->user_id,
+                'hewan_id' => $permohonan->hewan_id,
+                'permohonan_id' => $permohonan->id,
                 'nama_lengkap' => $permohonan->nama,
                 'umur' => $permohonan->umur,
                 'no_hp' => $permohonan->no_hp,
@@ -140,6 +145,9 @@ class PermohonanAdopsiController extends Controller
             'message' => 'Get successfully',
             'data' => $permohonan->map(function ($item) {
                 return [
+                    'user_id' => $item->user_id,
+                    'hewan_id' => $item->hewan_id,
+                    'permohonan_id' => $item->id,
                     'nama' => $item->user->name,
                     'profile_photo' => $item->user->profile_photo ? asset('storage/' . $item->user->profile_photo) : null,
                 ];
@@ -173,6 +181,9 @@ class PermohonanAdopsiController extends Controller
         return response()->json([
             'message' => 'Get successfully',
             'data' => [
+                'user_id' => $permohonan->user_id,
+                'hewan_id' => $permohonan->hewan_id,
+                'permohonan_id' => $permohonan->id,
                 'nama_lengkap' => $permohonan->nama,
                 'umur' => $permohonan->umur,
                 'no_hp' => $permohonan->no_hp,

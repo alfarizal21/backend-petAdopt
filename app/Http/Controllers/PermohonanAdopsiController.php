@@ -76,7 +76,7 @@ class PermohonanAdopsiController extends Controller
                     'hewan_id' => $item->hewan_id,
                     'permohonan_id' => $item->id,
                     'nama' => $item->hewan->nama,
-                    'gambar' => $item->hewan->image? url('storage/' . $item->hewan->image): null,
+                    'image' => $item->hewan->image? url('storage/' . $item->hewan->image): null,
                 ];
             });
 

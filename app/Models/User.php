@@ -71,13 +71,4 @@ class User extends Authenticatable
     {
         return $this->hasMany(Like::class, 'user_id');
     }
-
-    /**
-     * Relasi antara User dan Adopsi
-     * User (adopter) bisa memiliki banyak riwayat adopsi
-     */
-    // public function riwayatAdopsi()
-    // {
-    //     return $this->hasMany(RiwayatAdopsi::class, 'id_user');
-    // }
 }

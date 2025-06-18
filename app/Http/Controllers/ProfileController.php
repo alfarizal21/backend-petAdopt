@@ -102,20 +102,6 @@ class ProfileController extends Controller
         ]);
     }
 
-    // public function getFotoProfil()
-    // {
-    //     $user = Auth::user();
-
-    //     if (!$user->profile_photo || !Storage::exists('public/profile_photos/' . $user->profile_photo)) {
-    //         return response()->json(['message' => 'No profile photo found'], 404);
-    //     }
-
-    //     return response()->json([
-    //         'message' => 'Profile photo retrieved.',
-    //         'file_url' => asset('storage/profile_photos/' . $user->profile_photo)
-    //     ]);
-    // }
-
     public function getFotoProfil()
     {
         $user = Auth::user();

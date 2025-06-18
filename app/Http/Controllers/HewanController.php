@@ -10,15 +10,6 @@ use Illuminate\Support\Facades\Storage;
 
 class HewanController extends Controller
 {
-    // public function index()
-    // {
-    //     $hewan = Hewan::with('user')->get();
-    //     return response()->json([
-    //         'message' => 'Get successfully',
-    //         'data' => $hewan
-    //     ]);
-    // }
-
     public function index()
     {
         $hewan = Hewan::with('user')->get();
@@ -52,45 +43,6 @@ class HewanController extends Controller
             'data' => $hewan
         ]);
     }
-
-    // public function show($id)
-    // {
-    //     $hewan = Hewan::with('user')->find($id);
-
-    //     if (!$hewan) {
-    //         return response()->json(['message' => 'Not found'], 404);
-    //     }
-
-    //     return response()->json([
-    //         'message' => 'Get successfully',
-    //         'data' => $hewan
-    //     ]);
-    // }
-
-    // public function store(Request $request)
-    // {
-    //     $request->validate([
-    //         'nama' => 'required|string',
-    //         'jenis' => 'required|string',
-    //         'usia' => 'required|integer',
-    //         'status' => 'required|in:tersedia,tidak tersedia',
-    //         'deskripsi' => 'nullable|string'
-    //     ]);
-
-    //     $hewan = Hewan::create([
-    //         'user_id' => Auth::id(),
-    //         'nama' => $request->nama,
-    //         'jenis' => $request->jenis,
-    //         'usia' => $request->usia,
-    //         'status' => $request->status,
-    //         'deskripsi' => $request->deskripsi
-    //     ]);
-
-    //     return response()->json([
-    //         'message' => 'Added successfully',
-    //         // 'data' => $hewan
-    //     ], 201);
-    // }
 
     public function store(Request $request)
     {
@@ -171,32 +123,6 @@ class HewanController extends Controller
         ]);
     }
 
-    // public function update(Request $request, $id)
-    // {
-    //     $hewan = Hewan::find($id);
-
-    //     if (!$hewan) {
-    //         return response()->json(['message' => 'Not found'], 404);
-    //     }
-
-    //     $request->validate([
-    //         'nama' => 'sometimes|required|string',
-    //         'jenis' => 'sometimes|required|string',
-    //         'usia' => 'sometimes|required|integer',
-    //         'status' => 'sometimes|required|in:tersedia,tidak tersedia',
-    //         'deskripsi' => 'nullable|string'
-    //     ]);
-
-    //     $hewan->update($request->only([
-    //         'nama', 'jenis', 'usia', 'status', 'deskripsi'
-    //     ]));
-
-    //     return response()->json([
-    //         'message' => 'Updated successfully',
-    //         // 'data' => $hewan
-    //     ]);
-    // }
-
     public function destroy($id)
     {
         $hewan = Hewan::find($id);
@@ -209,24 +135,6 @@ class HewanController extends Controller
 
         return response()->json(['message' => 'Deleted successfully']);
     }
-
-    // public function filterByJenis(Request $request, $jenis)
-    // {
-    //     $jenis = strtolower($jenis);
-
-    //     if (!in_array($jenis, ['kucing', 'anjing'])) {
-    //         return response()->json([
-    //             'message' => 'Invalid animal type. Please use "kucing" or "anjing".'
-    //         ], 400);
-    //     }
-
-    //     $hewan = Hewan::with('user')->where('jenis', $jenis)->get();
-
-    //     return response()->json([
-    //         'message' => 'Get successfully',
-    //         'data' => $hewan
-    //     ]);
-    // }
 
     public function filterByJenis(Request $request, $jenis)
     {
@@ -271,16 +179,4 @@ class HewanController extends Controller
             'data' => $hewans
         ]);
     }
-
-    // public function myPets()
-    // {
-    //     $user = Auth::user();
-
-    //     $hewans = $user->hewan()->with('user')->get();
-
-    //     return response()->json([
-    //         'message' => 'Get your pets successfully',
-    //         'data' => $hewans
-    //     ]);
-    // }
 }

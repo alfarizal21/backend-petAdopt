@@ -12,7 +12,11 @@ class Notifikasi extends Model
     protected $table = 'notifikasi';
 
     protected $fillable = [
-        'user_id', 'judul', 'pesan', 'status', 'send_at'
+        'user_id',
+        'judul',
+        'pesan',
+        'status',
+        'send_at'
     ];
 
     public function user()

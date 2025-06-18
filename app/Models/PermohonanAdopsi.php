@@ -12,9 +12,20 @@ class PermohonanAdopsi extends Model
     protected $table = 'permohonan_adopsi';
 
     protected $fillable = [
-        'user_id', 'hewan_id', 'nama', 'umur', 'no_hp', 'email', 'nik',
-        'jenis_kelamin', 'tempat_tanggal_lahir', 'pekerjaan', 'alamat', 'riwayat_adopsi',
-        'status', 'tanggal_permohonan'
+        'user_id',
+        'hewan_id',
+        'nama',
+        'umur',
+        'no_hp',
+        'email',
+        'nik',
+        'jenis_kelamin',
+        'tempat_tanggal_lahir',
+        'pekerjaan',
+        'alamat',
+        'riwayat_adopsi',
+        'status',
+        'tanggal_permohonan'
     ];
 
     public function user()

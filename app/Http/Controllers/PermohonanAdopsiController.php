@@ -83,7 +83,7 @@ class PermohonanAdopsiController extends Controller
         return response()->json([
             'message' => 'Get successfully',
             'data' => $permohonan
-        ]);
+        ],200);
     }
 
     //mengembalikan data permohonan adopsi berdasarkan id permohonan
@@ -118,7 +118,7 @@ class PermohonanAdopsiController extends Controller
                 'status' => $permohonan->status,
                 'tanggal_permohonan' => $permohonan->tanggal_permohonan,
             ]
-        ]);
+        ],200);
     }
 
     //mengambil daftar pemohon adopsi berdasarkan id hewan
@@ -152,7 +152,7 @@ class PermohonanAdopsiController extends Controller
                     'profile_photo' => $item->user->profile_photo? url('storage/' . $item->user->profile_photo): null,
                 ];
             }),
-        ]);
+        ],200);
     }
 
     //mengambil detail permohonan adopsi berdasarkan id hewan dan id user
@@ -197,7 +197,7 @@ class PermohonanAdopsiController extends Controller
                 'status' => $permohonan->status,
                 'tanggal_permohonan' => $permohonan->tanggal_permohonan,
             ]
-        ]);
+        ],200);
     }
 
     //mengupdate status permohonan adopsi sekaligus mengirim notifikasi ke user yang mengajukan permohonan adopsi
@@ -233,7 +233,7 @@ class PermohonanAdopsiController extends Controller
         return response()->json([
             'message' => "Permohonan berhasil {$request->status}",
             'status' => $request->status
-        ]);
+        ],200);
     }
 
     public function update(Request $request, $id)
@@ -276,7 +276,7 @@ class PermohonanAdopsiController extends Controller
             'pekerjaan' => $request->pekerjaan,
             'alamat' => $request->alamat,
             'riwayat_adopsi' => $request->riwayat_adopsi,
-        ]);
+        ],200);
 
         return response()->json(['message' => 'Updated successfully']);
     }
@@ -295,6 +295,8 @@ class PermohonanAdopsiController extends Controller
 
         $permohonan->delete();
 
-        return response()->json(['message' => 'Deleted successfully']);
+        return response()->json([
+            'message' => 'Deleted successfully'
+        ],200);
     }
 }

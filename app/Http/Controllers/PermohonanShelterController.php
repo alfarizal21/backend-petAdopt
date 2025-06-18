@@ -17,7 +17,7 @@ class PermohonanShelterController extends Controller
         $user = Auth::user();
         $path = $request->file('file')->store('permohonan_shelter', 'public');
 
-        $permohonan = PermohonanShelter::create([
+        PermohonanShelter::create([
             'user_id' => $user->id,
             'file' => $path,
             'status' => 'menunggu'

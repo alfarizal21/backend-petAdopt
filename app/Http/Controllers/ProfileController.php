@@ -17,7 +17,7 @@ class ProfileController extends Controller
         return response()->json([
             'name' => $user->name,
             'email' => $user->email
-        ]);
+        ],200);
     }
 
     public function detailProfile()
@@ -30,7 +30,7 @@ class ProfileController extends Controller
             'jenis_kelamin' => $user->jenis_kelamin,
             'no_telp' => $user->no_telp,
             'email' => $user->email
-        ]);
+        ],200);
     }
 
     public function updateProfile(Request $request)
@@ -55,7 +55,7 @@ class ProfileController extends Controller
 
         return response()->json([
             'message' => 'Profile updated successfully',
-        ]);
+        ],200);
     }
 
     public function updatePassword(Request $request)
@@ -68,14 +68,18 @@ class ProfileController extends Controller
         ]);
 
         if (!Hash::check($validated['old_password'], $user->password)) {
-            return response()->json(['message' => 'Old password not match'], 422);
+            return response()->json([
+                'message' => 'Old password not match'
+            ], 422);
         }
 
-       $user->update([
+        $user->update([
             'password' => Hash::make($request->new_password),
         ]);
 
-        return response()->json(['message' => 'Password updated successfully']);
+        return response()->json([
+            'message' => 'Password updated successfully'
+        ],200);
     }
 
     public function uploadFotoProfil(Request $request)
@@ -99,7 +103,7 @@ class ProfileController extends Controller
 
         return response()->json([
             'message' => 'Profile photo uploaded successfully.'
-        ]);
+        ],200);
     }
 
     public function getFotoProfil()
@@ -121,7 +125,7 @@ class ProfileController extends Controller
         return response()->json([
             'message' => 'Get photo profile success.',
             'profile_photo' => asset('storage/' . $filePath)
-        ]);
+        ],200);
     }
 
     public function deleteFotoProfil()
@@ -140,6 +144,8 @@ class ProfileController extends Controller
         // Hapus referensi dari database
         $user->update(['profile_photo' => null]);
 
-        return response()->json(['message' => 'Profile photo deleted.']);
+        return response()->json([
+            'message' => 'Profile photo deleted.'
+        ],200);
     }
 }

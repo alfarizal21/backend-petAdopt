@@ -23,7 +23,7 @@ class HewanController extends Controller
         return response()->json([
             'message' => 'Get successfully',
             'data' => $hewan
-        ]);
+        ],200);
     }
 
     public function show($id)
@@ -41,7 +41,7 @@ class HewanController extends Controller
         return response()->json([
             'message' => 'Get successfully',
             'data' => $hewan
-        ]);
+        ],200);
     }
 
     public function store(Request $request)
@@ -120,7 +120,7 @@ class HewanController extends Controller
 
         return response()->json([
             'message' => 'Updated successfully',
-        ]);
+        ],200);
     }
 
     public function destroy($id)
@@ -133,7 +133,9 @@ class HewanController extends Controller
 
         $hewan->delete();
 
-        return response()->json(['message' => 'Deleted successfully']);
+        return response()->json([
+            'message' => 'Deleted successfully'
+        ],200);
     }
 
     public function filterByJenis(Request $request, $jenis)
@@ -158,7 +160,7 @@ class HewanController extends Controller
         return response()->json([
             'message' => 'Get successfully',
             'data' => $hewan
-        ]);
+        ],200);
     }
 
     public function myPets()
@@ -177,6 +179,6 @@ class HewanController extends Controller
         return response()->json([
             'message' => 'Get your pets successfully',
             'data' => $hewans
-        ]);
+        ],200);
     }
 }

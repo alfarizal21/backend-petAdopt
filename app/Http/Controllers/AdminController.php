@@ -25,7 +25,7 @@ class AdminController extends Controller
                 'shelter' => $shelterCount,
                 'admin' => $adminCount,
             ]
-        ]);
+        ],200);
     }
 
     // Statistik hewan
@@ -42,7 +42,7 @@ class AdminController extends Controller
                 'kucing' => $kucingCount,
                 'anjing' => $anjingCount,
             ]
-        ]);
+        ],200);
     }
 
     public function listPermohonanShelter()
@@ -59,7 +59,7 @@ class AdminController extends Controller
         return response()->json([
             'message' => 'Get successfully',
             'data' => $permohonan
-        ]);
+        ],200);
     }
 
     public function verifikasi(Request $request, $id)
@@ -71,7 +71,9 @@ class AdminController extends Controller
         $permohonan = \App\Models\PermohonanShelter::find($id);
 
         if (!$permohonan) {
-            return response()->json(['message' => 'Permohonan tidak ditemukan'], 404);
+            return response()->json([
+                'message' => 'Permohonan tidak ditemukan'
+            ], 404);
         }
 
         $permohonan->status = $request->status;
@@ -99,6 +101,6 @@ class AdminController extends Controller
         return response()->json([
             'message' => 'Status permohonan berhasil diperbarui',
             'status' => $request->status
-        ]);
+        ], 200);
     }
 }

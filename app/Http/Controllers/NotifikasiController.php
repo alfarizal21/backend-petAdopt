@@ -25,7 +25,7 @@ class NotifikasiController extends Controller
         return response()->json([
             'message' => 'Get successfully',
             'data' => $notifikasi,
-        ]);
+        ],200);
     }
 
     // Menandai notifikasi sebagai dibaca
@@ -48,6 +48,6 @@ class NotifikasiController extends Controller
         return response()->json([
             'message' => 'Notification already read',
             'data' => $notifikasi
-        ]);
+        ],200);
     }
 }

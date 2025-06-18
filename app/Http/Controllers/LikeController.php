@@ -28,7 +28,7 @@ class LikeController extends Controller
         Like::create([
             'user_id' => $user->id,
             'hewan_id' => $hewan_id,
-        ]);
+        ],200);
 
         return response()->json(['message' => 'Liked']);
     }
@@ -51,6 +51,6 @@ class LikeController extends Controller
         return response()->json([
             'message' => 'Get successfully',
             'data' => $hewans
-        ]);
+        ],200);
     }
 }

@@ -22,7 +22,10 @@ class LikeController extends Controller
 
         if ($like) {
             $like->delete();
-            return response()->json(['message' => 'Disliked']);
+            return response()->json([
+                'message' => 'Disliked',
+                'liked' => false
+            ], 200);
         }
 
         Like::create([
@@ -30,7 +33,10 @@ class LikeController extends Controller
             'hewan_id' => $hewan_id,
         ],200);
 
-        return response()->json(['message' => 'Liked']);
+        return response()->json([
+            'message' => 'Liked',
+            'liked' => true
+        ], 200);
     }
 
     public function favoriteHewan()

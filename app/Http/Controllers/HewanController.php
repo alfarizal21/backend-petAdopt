@@ -12,18 +12,24 @@ class HewanController extends Controller
 {
     public function index()
     {
+        $user = Auth::user();
+
         $hewan = Hewan::with('user')->get();
 
         //pake asset('') biar url nya jadi lengkap(beserta http..)
-        $hewan->transform(function ($item) {
+        $hewan->transform(function ($item) use ($user) {
             $item->image = $item->image ? asset('storage/' . $item->image) : null;
+
+            // cek like
+            $item->liked = $item->likes()->where('user_id', $user->id)->exists();
+
             return $item;
         });
 
         return response()->json([
             'message' => 'Get successfully',
             'data' => $hewan
-        ],200);
+        ], 200);
     }
 
     public function show($id)

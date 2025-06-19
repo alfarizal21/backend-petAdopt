@@ -14,7 +14,9 @@ class HewanController extends Controller
     {
         $user = Auth::user();
 
-        $hewan = Hewan::with('user')->get();
+        $hewan = Hewan::with('user')
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         //pake asset('') biar url nya jadi lengkap(beserta http..)
         $hewan->transform(function ($item) use ($user) {
@@ -173,7 +175,9 @@ class HewanController extends Controller
     {
         $user = Auth::user();
 
-        $hewans = $user->hewan()->with('user')->get();
+        $hewans = $user->hewan()->with('user')
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         $hewans->transform(function ($item) {
             $item->image = $item->image

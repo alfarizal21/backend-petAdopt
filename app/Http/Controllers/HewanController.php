@@ -71,7 +71,7 @@ class HewanController extends Controller
             $imagePath = $request->file('image')->store('hewan_images', 'public');
         }
 
-        $hewan = Hewan::create([
+        Hewan::create([
             'user_id' => Auth::id(),
             'image' => $imagePath,
             'nama' => $request->nama,

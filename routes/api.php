@@ -123,6 +123,10 @@ Route::middleware('auth:sanctum')->group(function () {
         // pengajuan shelter
         Route::get('daftar-permohonan-shelter', [AdminController::class, 'listPermohonanShelter']);
         Route::post('permohonan-shelter/{id}/verifikasi', [AdminController::class, 'verifikasi']);
+
+        // notifikasi admin
+        Route::get('/notifikasi', [AdminController::class, 'getAdminNotifications']);
+        Route::patch('/notifikasi/{id}/read', [AdminController::class, 'markNotificationAsRead']);
     });
 });
 

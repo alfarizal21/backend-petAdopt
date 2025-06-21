@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PermohonanAdopsi;
 use App\Models\Hewan;
+use App\Models\Notifikasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,7 +33,7 @@ class PermohonanAdopsiController extends Controller
             'riwayat_adopsi' => 'nullable',
         ]);
 
-        $hewan = \App\Models\Hewan::find($request->hewan_id);
+        $hewan = Hewan::find($request->hewan_id);
 
         if ($hewan->user_id === $user->id) {
             return response()->json(['message' => 'cannot send'], 403);
@@ -53,6 +54,16 @@ class PermohonanAdopsiController extends Controller
             'riwayat_adopsi' => $request->riwayat_adopsi,
             'tanggal_permohonan' => now()->toDateString(),
             'status' => 'menunggu'
+        ]);
+
+        $owner = $hewan->user;
+
+        Notifikasi::create([
+            'user_id' => $owner->id,
+            'judul' => 'Permohonan Adopsi Baru',
+            'pesan' => "Ada permohonan adopsi baru untuk hewan bernama {$hewan->nama} dari {$user->name}.",
+            'status' => 'belum dibaca',
+            'send_at' => now(),
         ]);
 
         return response()->json([
@@ -207,7 +218,7 @@ class PermohonanAdopsiController extends Controller
             'status' => 'required|in:diterima,ditolak',
         ]);
 
-        $permohonan = \App\Models\PermohonanAdopsi::find($id);
+        $permohonan = PermohonanAdopsi::find($id);
 
         if (!$permohonan) {
             return response()->json(['message' => 'Not found'], 404);

@@ -264,32 +264,34 @@ class PermohonanAdopsiController extends Controller
         }
 
         $request->validate([
-            'nama' => 'required',
-            'umur' => 'required|integer',
-            'no_hp' => 'required|string',
-            'email' => 'required|email',
-            'nik' => 'required|string|size:16|regex:/^[0-9]+$/',
-            'jenis_kelamin' => 'required|in:laki-laki,perempuan',
-            'tempat_tanggal_lahir' => 'required',
-            'pekerjaan' => 'required',
-            'alamat' => 'required',
+            'nama' => 'sometimes|required',
+            'umur' => 'sometimes|required|integer',
+            'no_hp' => 'sometimes|required|string',
+            'email' => 'sometimes|required|email',
+            'nik' => 'sometimes|required|string|size:16|regex:/^[0-9]+$/',
+            'jenis_kelamin' => 'sometimes|required|in:laki-laki,perempuan',
+            'tempat_tanggal_lahir' => 'sometimes|required',
+            'pekerjaan' => 'sometimes|required',
+            'alamat' => 'sometimes|required',
             'riwayat_adopsi' => 'nullable',
         ]);
 
         $permohonan->update([
-            'nama' => $request->nama,
-            'umur' => $request->umur,
-            'no_hp' => $request->no_hp,
-            'email' => $request->email,
-            'nik' => $request->nik,
-            'jenis_kelamin' => $request->jenis_kelamin,
-            'tempat_tanggal_lahir' => $request->tempat_tanggal_lahir,
-            'pekerjaan' => $request->pekerjaan,
-            'alamat' => $request->alamat,
-            'riwayat_adopsi' => $request->riwayat_adopsi,
-        ],200);
+            'nama' => $request->nama ?? $permohonan->nama,
+            'umur' => $request->umur ?? $permohonan->umur,
+            'no_hp' => $request->no_hp ?? $permohonan->no_hp,
+            'email' => $request->email ?? $permohonan->email,
+            'nik' => $request->nik ?? $permohonan->nik,
+            'jenis_kelamin' => $request->jenis_kelamin ?? $permohonan->jenis_kelamin,
+            'tempat_tanggal_lahir' => $request->tempat_tanggal_lahir ?? $permohonan->tempat_tanggal_lahir,
+            'pekerjaan' => $request->pekerjaan ?? $permohonan->pekerjaan,
+            'alamat' => $request->alamat ?? $permohonan->alamat,
+            'riwayat_adopsi' => $request->riwayat_adopsi ?? $permohonan->riwayat_adopsi,
+        ]);
 
-        return response()->json(['message' => 'Updated successfully']);
+        return response()->json([
+            'message' => 'Updated successfully'
+        ],200);
     }
 
     public function destroy($id)

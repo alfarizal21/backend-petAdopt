@@ -47,6 +47,7 @@ class LikeController extends Controller
             ->get()
             ->map(function ($hewan) {
                 return [
+                    'id' => $hewan->id,
                     'image' => $hewan->image? asset('storage/' . $hewan->image) : null,
                     'nama' => $hewan->nama,
                     'status' => $hewan->status,
